@@ -1,0 +1,61 @@
+conky.config = {
+    -- Configuración de la ventana
+    -- Ventanas y Bordes
+    alignment = 'top_right',
+    background = flase,
+    border_width = 1,
+    draw_borders = false,
+    draw_outline = false,
+    draw_shades = flase,
+
+    --truco para bordes redondeados
+
+    cpu_avg_samples = 2,
+    double_buffer = true,
+    font = 'JetBrainsMono:size=10',
+    gap_x = 20,
+    gap_y = 50,
+    minimum_width = 250,
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_transparent = flase,
+    own_window_argb_visual = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    draw_shades = false,
+    default_color = 'B3FFE3', -- Color de las letras
+    color1 = '#0BE08C', -- Color para títulos (Verde)
+    color2 = '#FF5555', --Color rojo para marcar
+    color3 = '9B89D9',
+    update_interval = 1.0,
+    
+    
+}
+
+conky.text = [[
+${color1}SISTEMA ${hr}
+${color2}Kernel: ${alignr}${kernel}
+${color}Uptime: ${alignr}${uptime}
+
+${color1}PROCESADOR (CPU) ${hr}
+${color}Uso: ${cpu cpu0}% ${alignr}${cpugraph 15,200 00ff00 ff0000 -t}
+${color}Temp: ${alignr}${hwmon 1 temp 1}°C
+
+${color1}ETH ${hr}
+${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
+${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
+
+${color}Dj que me dices aqui ${color2}-- Comentario
+
+${color1}MEMORIA (RAM) ${hr}
+${color}RAM: ${mem} / ${memmax} ${alignr}${memperc}%
+${membar 8}
+
+${color1}DISCO ${hr}
+${color}Libre: ${fs_free /} ${alignr}${fs_used_perc /}%
+${fs_bar 8 /}
+
+${color1}PROCESOS ${hr}
+${color}Nombre ${alignr}CPU%
+${top name 1} ${alignr}${top cpu 1}
+${top name 2} ${alignr}${top cpu 2}
+]]
