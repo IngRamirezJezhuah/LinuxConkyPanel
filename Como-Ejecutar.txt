@@ -1,0 +1,3 @@
+
+en mi caso para ejecutarlo uso 
+ conky -c .config/conky/mi_panel.conkyrc   

@@ -1,55 +1,69 @@
 conky.config = {
-    -- Configuración de la ventana
+
     -- Ventanas y Bordes
+    -- lua_load = '~/.config/conky/draw_bg.lua',
+    -- lua_draw_hook_pre = 'draw_bg',
     alignment = 'top_right',
-    background = flase,
+    background = false,
     border_width = 1,
     draw_borders = false,
     draw_outline = false,
-    draw_shades = flase,
+    draw_shades = false,
+
+    draw_graph_borders= false,
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 150,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
     --truco para bordes redondeados
+    border_inner_margin = 15,
+    border_outer_margin = 0,
+    border_width = 0,
+    stippled_borders = 0,
+    double_buffer = true,
+    update_interval = 1.0,
+    gap_x = 30,
+    gap_y = 30,
+    minimum_width = 250,
+    minimum_height = 400,
+    own_window_class = 'Conky',
 
     cpu_avg_samples = 2,
     double_buffer = true,
     font = 'JetBrainsMono:size=10',
-    gap_x = 20,
-    gap_y = 50,
     minimum_width = 250,
     own_window = true,
-    own_window_type = 'normal',
-    own_window_transparent = flase,
-    own_window_argb_visual = true,
-    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_type = 'desktop',
     draw_shades = false,
     default_color = 'B3FFE3', -- Color de las letras
     color1 = '#0BE08C', -- Color para títulos (Verde)
     color2 = '#FF5555', --Color rojo para marcar
     color3 = '9B89D9',
-    update_interval = 1.0,
-    
-    
+    update_interval = 1.0,       
 }
 
 conky.text = [[
 ${color1}SISTEMA ${hr}
 ${color2}Kernel: ${alignr}${kernel}
 ${color}Uptime: ${alignr}${uptime}
+${color1}ENERGIA ${hr}
+${color}Bateria: ${battery_percent}% ${alignr}${battery_bar 8, 100}
+${color}Estado: ${alignr}${battery_status}
 
 ${color1}PROCESADOR (CPU) ${hr}
 ${color}Uso: ${cpu cpu0}% ${alignr}${cpugraph 15,200 00ff00 ff0000 -t}
 ${color}Temp: ${alignr}${hwmon 1 temp 1}°C
 
-${color1}ETH ${hr}
-${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
-${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
-
-${color}Dj que me dices aqui ${color2}-- Comentario
+${color1}${font :bold:size=11}GRÁFICOS (GPU) ${hr}${font}
+${color}Modelo: ${alignr}${execi 60 glxinfo | grep "Device" | cut -d ' ' -f 5-}
+${color}Uso GPU: ${alignr}${execi 5 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null || echo "N/A"}%
+${color}VRAM: ${alignr}${execi 5 nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null || echo "0"} MB
+${color}Temp GPU: ${alignr}${execi 5 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>/dev/null || echo "0"}°C
 
 ${color1}MEMORIA (RAM) ${hr}
 ${color}RAM: ${mem} / ${memmax} ${alignr}${memperc}%
 ${membar 8}
-
 ${color1}DISCO ${hr}
 ${color}Libre: ${fs_free /} ${alignr}${fs_used_perc /}%
 ${fs_bar 8 /}
@@ -58,4 +72,11 @@ ${color1}PROCESOS ${hr}
 ${color}Nombre ${alignr}CPU%
 ${top name 1} ${alignr}${top cpu 1}
 ${top name 2} ${alignr}${top cpu 2}
+
+${color1}ETH ${hr}
+${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
+${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
+
+${color}IP Local: ${alignr}${addr wlo1}
+${color}IP Pública: ${alignr}${execi 3600 curl -s http://icanhazip.com}
 ]]
