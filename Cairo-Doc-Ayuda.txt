@@ -1,0 +1,87 @@
+Documentacion Base de Cairo
+Para que se puedan crear efectos visuales como oscilaciones oh animaciones
+de carga en conky debemos entender que usa las matematicas
+para poder aminar
+
+Cairo Funciona como un "pincel invisible" que sigue coordenadas, aqui estan las
+funciones que se estas unsando y se pueden explicar de la siguiente forma:
+
+-> cairo_arc(cr, x, y, radio, angulo_inicio, angulo_fin)
+  ↳ Esto lo que hace es dibujar el arco de los angulos que se miden en 
+  radiantes, un circulo completo es de 0 a 2 Pi.
+
+-> cairo_set_line_width(cr, grosor)
+  ↳ define el grosor es la linea del pincel
+
+-> cairo_set_soruce_rgba(cr, r, g, b, a)
+  ↳ Drfine el color los valores van de 0 a 1
+  ejemplo: 0.5 es la mitad de la intensidad
+
+-> cairo_stroke(cr)
+  ↳Es la orden de "pintar" la linea que se traza con el acro
+
+-> cairo_fill(cr)
+  ↳Rellena el interior de la figura que trazaste
+  
+Concepto de Animacion en Conky
+conky no tiene una linea de timepo real pero tiene un control de actualizaciones
+ -- ${updates} -- Se puede caputrar el numero en lua para crear movimiento
+ La logica de oscilacion
+ Para que algo se mueca de atras hacia adelante (como una pantalla de carga)
+ usamos la funcion -- Seno(math.sin) --
+
+  -->El valor de sin(x) simepre ocila entre -1 y 1
+  __>Si multiplicamos eso por el tiempo (updates) se obtiene un valor que sube
+  y baja rapidamente dando eso que busco
+
+Ejemplo de implementacion: "Efecto scanner"
+si Quiero hacer un arco que "de vueltas o oscile dentro de un circulo"
+puedo añadir una fucion como la que ya tengo en draw_bg.lua
+
+function draw_oscillator(cr, x, y, radius)
+    --1. Obtinene el numero de acrualizaciones para usarlo como "tiempo"
+    local updates = tonumber(concky_parse('${updates}'))
+    --2. Calcular el angulo que cambie el tiempo
+    --El 0.1 controla la velocidad de la animacion
+    local move = updates * 0.1
+    local start_angle = move
+    local end:angel = move + (math.pi / 2) -- un cuarto de circulo
+
+    --3 Dibujar el efecto visual
+    cairo_set_line_width(cr, 2) --Linea delgada para el efecto
+    cairo_set_source_rgba(cr, 0, 1, 1, 0.5) --cian semi-trasparente
+    cairo_arc(cr, x ,y, radius - 10, start_angle, end_angle)
+    cairo_stroke(cr)
+end
+    
+y luego en el conky_main se llama como lo describimos
+-- draw_oscilator(cr, 70, 230, 35)
+
+Ideas para que intente probando esto
+
+Efecto Latido(Pulse)
+↳En lugar de cambiar el angulo, cambia el radio usando sin
+-> local dynamic_radius = radius + (5 * math.sin(updates * 0.2))
+
+Efecto de Carga (Loading Spin)
+↳Usa un arco pequeño que da vueltas de 360° (2pi radianes) sin detenerse
+-> local angle = (updates % 20) / 20 * 2 * math.pi
+
+Color que respira
+↳Cambia el canal alfa (Trasparente) con el tiempo
+--> local alpha = 0.5 + 0.5 * math.sin(updates * 0.1) 
+    cairo_set_source_rgba(cr, r, g, b, alpha)
+
+El Loop De dibujo
+Es importante recordar que cada vez que update:interval (en el .conkyrc) se cumple:
+    
+    1- conky borra la ventana
+    2- llama a conky_main
+    3- lua ejecuta todas tus funciones de dibujo desde cero
+    4- se muestra la nueva imagen
+por eso, si el update_interval es muy alto (ej. 1.0), las animaciones se veran "trabadas"
+Para efectos fluidos, se suele baja a 0.1 o 0.2, aunque consume un poco mas de la cpu.
+
+
+ 
+

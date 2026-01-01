@@ -1,8 +1,10 @@
 conky.config = {
 
+    --Importacion de archivos 
+    lua_load = '/home/djxs4n/.config/conky/draw_bg.lua',
+    lua_draw_hook_pre = 'main',
+
     -- Ventanas y Bordes
-    -- lua_load = '~/.config/conky/draw_bg.lua',
-    -- lua_draw_hook_pre = 'draw_bg',
     alignment = 'top_right',
     background = false,
     border_width = 1,
@@ -26,9 +28,8 @@ conky.config = {
     gap_x = 30,
     gap_y = 30,
     minimum_width = 250,
-    minimum_height = 400,
+    minimum_height = 450,
     own_window_class = 'Conky',
-
     cpu_avg_samples = 2,
     double_buffer = true,
     font = 'JetBrainsMono:size=10',
@@ -40,7 +41,7 @@ conky.config = {
     color1 = '#0BE08C', -- Color para títulos (Verde)
     color2 = '#FF5555', --Color rojo para marcar
     color3 = '9B89D9',
-    update_interval = 1.0,       
+    update_interval = 0.1, -- Actualiza la velocidad de refreso 20 veces por seg       
 }
 
 conky.text = [[
@@ -54,6 +55,9 @@ ${color}Estado: ${alignr}${battery_status}
 ${color1}PROCESADOR (CPU) ${hr}
 ${color}Uso: ${cpu cpu0}% ${alignr}${cpugraph 15,200 00ff00 ff0000 -t}
 ${color}Temp: ${alignr}${hwmon 1 temp 1}°C
+
+${goto 60}CPU${goto 165}RAM
+${voffset 90}
 
 ${color1}${font :bold:size=11}GRÁFICOS (GPU) ${hr}${font}
 ${color}Modelo: ${alignr}${execi 60 glxinfo | grep "Device" | cut -d ' ' -f 5-}
