@@ -41,7 +41,7 @@ conky.config = {
     color1 = '#0BE08C', -- Color para títulos (Verde)
     color2 = '#FF5555', --Color rojo para marcar
     color3 = '9B89D9',
-    update_interval = 0.1, -- Actualiza la velocidad de refreso 20 veces por seg       
+    update_interval = 0.01, -- Actualiza la velocidad de refreso 20 veces por seg       
 }
 
 conky.text = [[
@@ -77,10 +77,9 @@ ${color}Nombre ${alignr}CPU%
 ${top name 1} ${alignr}${top cpu 1}
 ${top name 2} ${alignr}${top cpu 2}
 
+
 ${color1}ETH ${hr}
 ${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
 ${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
 
-${color}IP Local: ${alignr}${addr wlo1}
-${color}IP Pública: ${alignr}${execi 3600 curl -s http://icanhazip.com}
 ]]

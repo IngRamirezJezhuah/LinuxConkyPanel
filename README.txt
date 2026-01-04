@@ -61,3 +61,31 @@ below: Lo mantiene siempre debajo de tus ventanas abiertas.
 sticky: Aparece en todos tus escritorios virtuales.
 
 la informacion se saca con man conky
+
+Anatomía de la función draw_ring
+Esta es la función que procesa esos números. Es importante entender que tiene dos capas de color:
+
+El Fondo del Anillo (Círculo vacío): En tu código actual tienes esto: cairo_set_source_rgba(cr, 144, 255, 240, 0.26)
+
+¡Ojo! Aquí hay un detalle: Como te decía, Cairo no entiende el "144" o "255". Para que funcione correctamente, estos números deberían ser decimales. Actualmente, al ser mayores a 1, Cairo los interpreta como 1 (blanco total).
+
+La Barra de Progreso (Lo que sube y baja): Aquí es donde se usan los colores que definiste arriba: cairo_set_source_rgba(cr, color[1], color[2], color[3], color[4])
+
+color[1] es el Rojo.
+
+color[2] es el Verde, y así sucesivamente.
+
+Resumen de funciones (Para qué sirve cada una)
+Función       Qué hace                    Cómo modificar el color
+draw_ring   Dibuja el círculo base        Se cambia en el último parámetro de la
+            y el progreso de CPU/RAM.       llamada en conky_main
+
+efecto_
+ocilacion   Es esa línea cian que         El color está fijo dentro
+            da vueltas.                   de la función: (cr, 0, 1, 1, 0.5)
+
+efecto_2    El arco que se mueve a        También está fijo:
+            velocidad 0.4.                (cr, 0, 1, 1, 0.5)
+
+ef_cpu      Tu nueva función rosa/fucsia  Se cambia en cairo_set_source_rgba
+                                          (cr, 0.96, 0.15, 0.56, 0.5).
