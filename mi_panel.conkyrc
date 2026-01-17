@@ -1,47 +1,44 @@
 conky.config = {
-
-    --Importacion de archivos 
+    -- Importacion de archivos 
     lua_load = '/home/djxs4n/.config/conky/draw_bg.lua',
-    lua_draw_hook_pre = 'main',
+    lua_draw_hook_pre = 'conky_main', -- <--- AQUÍ FALTABA UNA COMA
 
     -- Ventanas y Bordes
     alignment = 'top_right',
     background = false,
-    border_width = 1,
+    border_width = 0,
     draw_borders = false,
     draw_outline = false,
     draw_shades = false,
-
-    draw_graph_borders= false,
+    draw_graph_borders = false,
+    
+    own_window = true,
+    own_window_type = 'desktop',
     own_window_transparent = false,
     own_window_argb_visual = true,
     own_window_argb_value = 150,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_class = 'Conky',
 
-    --truco para bordes redondeados
+    -- Dimensiones y Márgenes
     border_inner_margin = 15,
     border_outer_margin = 0,
-    border_width = 0,
-    stippled_borders = 0,
-    double_buffer = true,
-    update_interval = 1.0,
     gap_x = 30,
     gap_y = 30,
     minimum_width = 250,
-    minimum_height = 450,
-    own_window_class = 'Conky',
-    cpu_avg_samples = 2,
+    minimum_height = 500, -- Aumentado un poco por si acaso
+
+    -- Rendimiento
     double_buffer = true,
+    update_interval = 0.001, -- <- esta wea hace que se vea mas rapido y fluido
+    cpu_avg_samples = 2,
+    
+    -- Estilo
     font = 'JetBrainsMono:size=10',
-    minimum_width = 250,
-    own_window = true,
-    own_window_type = 'desktop',
-    draw_shades = false,
-    default_color = 'B3FFE3', -- Color de las letras
-    color1 = '#0BE08C', -- Color para títulos (Verde)
-    color2 = '#FF5555', --Color rojo para marcar
-    color3 = '9B89D9',
-    update_interval = 0.01, -- Actualiza la velocidad de refreso 20 veces por seg       
+    default_color = 'B3FFE3',
+    color1 = '#0BE08C',
+    color2 = '#FF5555',
+    color3 = '9B89D9',       
 }
 
 conky.text = [[
@@ -56,7 +53,7 @@ ${color1}PROCESADOR (CPU) ${hr}
 ${color}Uso: ${cpu cpu0}% ${alignr}${cpugraph 15,200 00ff00 ff0000 -t}
 ${color}Temp: ${alignr}${hwmon 1 temp 1}°C
 
-${goto 60}CPU${goto 165}RAM
+${goto 60}CPU${goto 165}RAM 
 ${voffset 90}
 
 ${color1}${font :bold:size=11}GRÁFICOS (GPU) ${hr}${font}
@@ -73,13 +70,11 @@ ${color}Libre: ${fs_free /} ${alignr}${fs_used_perc /}%
 ${fs_bar 8 /}
 
 ${color1}PROCESOS ${hr}
-${color}Nombre ${alignr}CPU%
-${top name 1} ${alignr}${top cpu 1}
-${top name 2} ${alignr}${top cpu 2}
-
+${color}Nombre              ${color3}CPU%   ${color}Nombre              ${color3}CPU%
+${color}${top name 1} ${top cpu 1} | ${top name 2} ${top cpu 2}
+${top name 3} ${top cpu 3} | ${top name 4} ${top cpu 4}
 
 ${color1}ETH ${hr}
 ${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
 ${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
-
 ]]
