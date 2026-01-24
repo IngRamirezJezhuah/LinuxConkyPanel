@@ -88,4 +88,26 @@ efecto_2    El arco que se mueve a        También está fijo:
             velocidad 0.4.                (cr, 0, 1, 1, 0.5)
 
 ef_cpu      Tu nueva función rosa/fucsia  Se cambia en cairo_set_source_rgba
-                                          (cr, 0.96, 0.15, 0.56, 0.5).
+
+(cr, 0.96, 0.15, 0.56, 0.5).
+
+Para implementacion de acomodo general de la posicion de los textos
+se puede hacer 2 opciones diferentes
+por defecto podriasmos usar "{alignr}" que te empuja todo hasta ek final
+pero no te da tanta libertad como quisiese
+
+EL comando ${voffset} y ${offset} (control manual)
+
+En lugar de usar alineaciones autmaticas, puedes "Empujar"
+los elementos pixel por pixel
+
+${offset n} : Mueve el texto horizontalmente n pixeles a la derecha desde su pocision
+actual
+
+${voffset n} : Mueve el texto verticalmente n piceles (puede usar numeros negativos para 
+subirlos)
+
+${goto n} : Salta directamente a la posicion horizontal n desde el borde izquierdo del 
+panel
+
+
