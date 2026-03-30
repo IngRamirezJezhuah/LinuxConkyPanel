@@ -1,5 +1,5 @@
 sleep 2
 
-conky -c  /home/djxs4n/.config/conky/Wayland.conky.conkyrc
+conky -c  $HOME/Documentos/Programacion/PanelConky/LinuxConkyPanel/mi_panel.conkyrc 
 
 

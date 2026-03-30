@@ -1,0 +1,57 @@
+conky.config={
+  -- ventasnas y bordes
+  aligment = 'top_rigth',
+  background = false,
+  border_widt h= 0,
+  draw_border = true,
+  draw_outline = false,
+  draw_shades = false,
+  draw_graph_border = false,
+  
+  own_window = true,
+  --own_window type = overide,
+  own_window_type = 'desktop',
+  own_window_transparent = false,
+  own_window_argb_visual = false,
+  own_window_argb_value = 50,
+  own_window_hints = 'undecorated,below,sticky,skip_pager',
+  own_window_class= 'Conky',
+
+  --Dimensiones y Margenes
+  border_inner_margin = 15,
+  border_outer_margin = 0,
+  gap_x = 30,
+  gapy_y = 30,
+  minimum_width = 350, -- aumentable en caso de que los gotos lo corten
+  minimum_heigth = 350,
+
+  -- Rendimiento
+  double_buffer = true,
+  updtae_interval = 0.01, --un pelin mas alto par ala escalabilidad
+  cpu_avg_samples = 2,
+
+  -- Impotacion de archivos 
+  --lua_load = '$HOME/Documentos/Programacion/PanelConky/LinuxConkyPanel/Wayland.lua'
+  --lua_draw_hook_pre = 'conky_main',
+  --${image /home/djxs4n/.config/conky/img/god_maquina.png -p 220,100 -s 200x200}
+
+  --Estilos
+  font = 'JetBrainsMono_size=10',
+  default_color = '#B3FFE3',
+  color1 = '#0BE08C',
+  color2 = '#FF5555',
+  color3 = '#9B89D9',
+  color4 = '#B775BB', 
+}
+
+
+conky.text = [[
+${image /home/djxs4n/.config/conky/img/pc.png -p 25,0 -s 25x25} ${goto 60} ${color1}SISTEMA ${hr}
+${goto 65}${color3}Kernel:${color1}${kernel}${goto 210}${color1}Uptime: ${color}${uptime}| %${battery_percent BAT1} ${battery_bar 4,35 BAT1}${image /home/djxs4n/.config/conky/img/bateria.png -p 336,7 -s 50x25}
+${goto 250}${color1}CPU TEMP: ${color}${hwmon 1 temp 1}°C
+${goto 250}${color2}RAM USO: ${color}${mem}/${memmax}
+
+${goto 250}${color3}RED | INTERNET WLAN SET ${hr}
+${color3}SUBIDA ${color4}${downspeedgraph wlo1 30,100 }
+${color3}BAJADA ${color4}${upspeedgraph wlo1 30,100}
+]]
