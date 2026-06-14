@@ -48,7 +48,7 @@ function conky_main()
   --  Variables de control
   --============================
   local centro_y = 245
-  local cpu_x = 70
+  local cpu_x = 180
   local ram_x = 180
   local radio_nuevo = 40
 
@@ -56,7 +56,7 @@ function conky_main()
   --    colores
   --===========================
 
-  local color_ciam = {0, 1, 1, 0.5}
+  local color_cian = {0, 1, 1, 0.5}
   local color_verde_neon = {0.04, 0.88, 0.55, 1}
   local coolor_morado = {0.6,0.5,0.8,1}
 

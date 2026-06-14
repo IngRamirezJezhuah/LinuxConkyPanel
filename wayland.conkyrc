@@ -1,0 +1,83 @@
+conky.config = {
+  -- Importaciones
+    lua_load = 'LUA/Wayland.lua',
+  --  lua_draw_hook_pre = 'conky_main',
+
+  --Ventana en compatibilidad
+    own_window = true,
+    own_window_type = 'override',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_class = 'Conky',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    
+  -- Dimensiones y margenes
+    gap_x = 700,
+    gap_y = 200,
+    border_inner_margin = 15,
+    minimum_height = 500,
+    minimum_width = 500,
+    net_avg_samples = 2,
+    no_buffers = true,
+    double_buffer = true,
+    out_to_console = false,
+    out_to_ncurses = false,
+    out_to_stderr = false,
+    out_to_x = true,
+
+  --Rendimiento
+    update_interval = 0.01,
+    cpu_avg_samples = 2,
+    detect_battery = BAT1, 
+    uppercase = false,
+    use_spacer = 'none',
+    use_xft = true,
+    extra_newline = false,
+
+  --Estilo
+
+    font1 = 'ArcadeClassic:size=15',
+    font2 = 'Electroharmonix:size=17',
+    font = 'JetBrainsMono:size=10',
+    color1 = '#0BE08C',
+    color2 = '#FF5555',
+    color3 = '#9B89D9',
+    color4 = '#688A96',
+}
+
+conky.text = [[
+${voffset 5} ${color1}SISTEMA ${scroll 32 Conky Djxs4nOs - $sysname $nodename $machine} $hr
+${color2} ${scroll 15 Puto el que lo lea}  ${goto 150} ${voffset 5} Kernel: ${kernel} ${hr}
+${goto 150} ${color3} Uptime: ${uptime} ${hr}
+
+${color1} ENERGIA ${hr}
+${color3} Bateria: ${battery_percent BAT1} ${color2} ${battery_bar 8, 100 BAT1}
+
+${color1}PROCESADOR (CPU) ${goto 165} MEMORIA (RAM) ${hr}
+${voffset 30}
+Uso: ${cpu cpu0} %   Uso: ${mem}/${memmax} | ${memperc}%
+
+${color1}${font :bold:size=11}GRÁFICOS (GPU) ${hr}${font}
+${color}Modelo: ${alignr}${execi 60 glxinfo | grep "Device" | cut -d ' ' -f 5}
+${color}Uso GPU: ${execi 5 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null || echo "N/A"}%
+${color}VRAM: ${execi 5 nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null || echo "0"} MB
+${color}Temp GPU:${execi 5 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>/dev/null || echo "0"}°C
+
+${color1} DISCO ${hr}
+${color}Libre: ${fs_free /} ${fs_used_perc /}%
+${fs_bar 8 /}
+
+${color1}PROCESOS $color $processes  ${color grey}Running:$color $running_processes
+$hr
+${color}Nombre              ${color3}CPU%   ${color}Nombre              ${color3}CPU%
+$hr
+${color}${top name 1} ${top cpu 1} | ${top name 2} ${top cpu 2}
+${top name 3} ${top cpu 3} | ${top name 4} ${top cpu 4}
+
+${color1}ETH ${hr}
+${color}Descarga: ${downspeed wlo1}${color3}${alignr}${downspeedgraph wlo1 20,100} 
+${color}subida: ${upspeed wlo1} ${alignr}${color3}${upspeedgraph wlo1 20,100}
+
+]]
+

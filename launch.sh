@@ -1,5 +1,9 @@
-sleep 2
+#!/bin/bash
 
-conky -c  $HOME/Documentos/Programacion/PanelConky/LinuxConkyPanel/mi_panel.conkyrc 
+echo "lanzando..."
+
+CONF_DIR="$(dirname "$0")"
+
+conky -c $CONF_DIR/wayland.conkyrc 
 
 
